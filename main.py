@@ -12,7 +12,7 @@ import os
 ###
 
 rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
-mqttc = mqtt.Client()
+
 topic = os.environ.get('BASE_TOPIC')
 broker_address = os.environ.get('BROKER_ADDRESS')
 broker_portno = int(os.environ.get('BROKER_PORT'))
@@ -30,10 +30,10 @@ def on_message(client, userdata, msg):
             rl.relays[index].turnOff()
 
         state = rl.relays[index].getStatus()
-        mqttc.publish(topic + "/state/" + index, payload=state, qos=0, retain=True)
+        client.publish(topic + "/state/" + index, payload=state, qos=0, retain=True)
 
     except:
-        mqttc.publish(topic + "/error", payload="An error occured", qos=0, retain=False)
+        client.publish(topic + "/error", payload="An error occured", qos=0, retain=False)
 
 client = mqtt.Client()
 client.on_connect = on_connect
