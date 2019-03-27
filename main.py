@@ -11,15 +11,10 @@ import os
 # BROKER_PORT: 1883
 ###
 
-#rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
-#topic = os.environ.get('BASE_TOPIC')
-#broker_address = os.environ.get('BROKER_ADDRESS')
-#broker_portno = int(os.environ.get('BROKER_PORT'))
-rl = ar.EightChanRelay("10.0.0.21", 1234, 8)
-topic = "relayA"
-broker_address = "192.168.0.10"
-broker_portno = 1883
-
+rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
+topic = os.environ.get('BASE_TOPIC')
+broker_address = os.environ.get('BROKER_ADDRESS')
+broker_portno = int(os.environ.get('BROKER_PORT'))
 
 def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
@@ -30,8 +25,10 @@ def on_message(client, userdata, msg):
         index = msg.topic.split('/')[2]
         if msg.payload == "ON":
             rl.relays[index].turnOn()
+            print("Turning ON")
         elif msg.payload == "OFF":
             rl.relays[index].turnOff()
+            print("Turning OFF")
 
         state = rl.relays[index].getStatus()
         client.publish(topic + "/state/" + index, payload=state, qos=0, retain=True)
