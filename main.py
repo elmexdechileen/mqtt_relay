@@ -11,11 +11,15 @@ import os
 # BROKER_PORT: 1883
 ###
 
-rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
+#rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
+#topic = os.environ.get('BASE_TOPIC')
+#broker_address = os.environ.get('BROKER_ADDRESS')
+#broker_portno = int(os.environ.get('BROKER_PORT'))
+rl = ar.EightChanRelay("10.0.0.21", 1234, 8)
+topic = "relayA"
+broker_address = "192.168.0.10"
+broker_portno = 1883
 
-topic = os.environ.get('BASE_TOPIC')
-broker_address = os.environ.get('BROKER_ADDRESS')
-broker_portno = int(os.environ.get('BROKER_PORT'))
 
 def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
