@@ -11,11 +11,11 @@ import os
 # BROKER_PORT: 1883
 ###
 
-rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), int(os.environ.get('RELAY_PORT')), 8)
+rl = ar.EightChanRelay(os.environ.get('RELAY_IP'), 1234, 8)
 mqttc = mqtt.Client()
 topic = os.environ.get('BASE_TOPIC')
 broker_address = os.environ.get('BROKER_ADDRESS')
-broker_portno = int(os.environ.get('BROKER_PORT'))
+broker_portno = 1883
 
 def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
